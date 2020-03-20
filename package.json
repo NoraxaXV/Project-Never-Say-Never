@@ -1,0 +1,33 @@
+{
+  "name": "MMORPG-Tutorial-with-Phaser",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@ebutler/phaser3-types": "^3.16.2",
+    "@phaserjs/loader": "0.0.5",
+    "@phaserjs/plugin-loader": "0.0.3",
+    "@sendgrid/helpers": "^6.5.5",
+    "@sendgrid/mail": "^6.5.5",
+    "bcrypt": "^4.0.1",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.5",
+    "nodemailer": "^6.4.5",
+    "nodemailer-express-handlebars": "^3.3.0",
+    "passport": "^0.4.1",
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0",
+    "phaser": "^3.22.0",
+    "phaser-loader": "0.0.0"
+  }
+}
