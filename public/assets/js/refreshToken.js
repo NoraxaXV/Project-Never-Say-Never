@@ -1,6 +1,7 @@
 function getCookie(cname) {
   var name = cname + "=";
   var decodedCookie = decodeURIComponent(document.cookie);
+
   var ca = decodedCookie.split(';');
   for(var i = 0; i <ca.length; i++) {
     var c = ca[i];
@@ -15,14 +16,13 @@ function getCookie(cname) {
 }
 
 
- 
-setInterval(function() {
-  $.ajax({
+function refreshToken(){
+  //alert("Trying to refresh auth...");
+	$.ajax({
     type: 'POST',
     url: '/token',
     data: {
-      refreshToken: getCookie('refreshJwt'),
-			email: getCookie('email')
+      refreshToken: getCookie('refreshJwt')
     },
     success: function(data) {},
     error: function(xhr) {
@@ -30,4 +30,8 @@ setInterval(function() {
       window.location.replace('/index.html');
     }
   });
-}, 10000);
+
+}
+
+refreshToken();
+setInterval(refreshToken, 10000);

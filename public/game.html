@@ -2,14 +2,30 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <title>Leaderboard</title>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/phaser@3.16.2/dist/phaser.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/@phaserjs/loader@0.0.5/dist/index.js"></script>
+	<meta charset="utf-8">
+	<title>Leaderboard</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+	</script>
+	<script src="//cdn.jsdelivr.net/npm/phaser@3.16.2/dist/phaser.min.js">
+	</script>
+	<script src="//cdn.jsdelivr.net/npm/@phaserjs/loader@0.0.5/dist/index.js">
+	</script>
+	<script src="/socket.io/socket.io.js">
+	</script>
+	<link href="assets/css/game.css" rel="stylesheet">
 </head>
 
 <body>
+	<div class="flex-container">
+		<div id="content"></div>
+		<div id="chatContainer">
+			<div class="chatArea">
+				<ul id="messages" class="messages"></ul>
+			</div>
+			<input id="inputMessage" class="inputMessage" placeholder="Type here..." type="text">
+    </div>
+	</div>
+	
 	<script>
 		window.onerror=function(e, url, line){
 			alert(`
