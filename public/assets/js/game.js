@@ -1,5 +1,47 @@
-//const Phaser = require('phaser');
-//const io = require("socket.io-client");
+// const Phaser = require('phaser');
+
+// const io = require("socket.io-client");
+
+function Anim(name, numOfFrames){
+	this.name = name;
+	this.numOfFrames = numOfFrames;
+}
+
+function createLPCReels(listOfAnims, maxRowSize){
+	var reels = {};
+	//{name, numOfFrames}
+	var lastIndex = 0;
+	var startIndex=lastIndex+1;
+	var directions=["up","right","down","left"];
+
+	for(let i=0; i<listOfAnims.length; i++){
+		let anim = listOfAnims[i];
+		let newReel = {}
+		let startIndex = lastIndex + 1;
+		
+		for(let d = 0; d<4; d++){
+			newReel[directions[d]] = [];
+			for(let r = lastIndex; r<lastIndex+maxRowSize; r++){
+				if(r<anim.numOfFrames+lastIndex){
+					newReel[directions[d]].push(r);
+				}
+			}
+			
+			lastIndex += maxRowSize;
+		}
+
+		reels[anim.name] = newReel;
+	}
+	
+	
+	return reels;
+}
+
+
+
+
+
+// lpcReels.deathReels = [[0, 20], [1, 20], [2, 20], [4, 20], [5, 20]]
 
 const inputMessage = document.getElementById('inputMessage');
 const messages = document.getElementById('messages');
@@ -58,12 +100,31 @@ class BootScene extends Phaser.Scene {
 			frameHeight: 16
 		});
 
+		this.load.spritesheet('kirito', 'assets/LPC/kirito.png', {
+			frameWidth: 64,
+			frameHeight: 64
+		});
+		
+		/*
+		this.load.spritesheet('kirito_oversize', 'assets/LPC/kirito_new.png', {
+			frameWidth: 192,
+			frameHeight: 192
+		});
+		*/
+
+		this.load.spritesheet('archer', 'assets/LPC/pink archer.png', {
+			frameWidth: 64,
+			frameHeight: 64
+		});
+		
 		this.load.image('golem', 'assets/images/coppergolem.png');
 		this.load.image('ent', 'assets/images/dark-ent.png');
 		this.load.image('demon', 'assets/images/demon.png');
 		this.load.image('worm', 'assets/images/giant-worm.png');
 		this.load.image('wolf', 'assets/images/wolf.png');
 		this.load.image('sword', 'assets/images/attack-icon.png');
+
+		
 	}
 
 	create() {
@@ -184,11 +245,24 @@ class WorldScene extends Phaser.Scene {
 	}
 
 	createAnimations() {
+
+		var lpcReels = createLPCReels([
+			new Anim('spell_cast', 7),
+			new Anim('thrust', 8),
+			new Anim('walk', 9),
+			new Anim('slash', 6),
+			new Anim('shoot', 13),
+		], 24);
+		
+		alert(lpcReels.walk.right);
+
 		//  animation with key 'left', we don't need left and right as we will use one and flip the sprite
+		let x = []
+		for(var i = 24; i<31; i++) x.push(i);
 		this.anims.create({
 			key: 'left',
-			frames: this.anims.generateFrameNumbers('player', {
-				frames: [1, 7, 1, 13]
+			frames: this.anims.generateFrameNumbers('kirito', {
+				frames: lpcReels.walk.left
 			}),
 			frameRate: 10,
 			repeat: -1
@@ -197,8 +271,8 @@ class WorldScene extends Phaser.Scene {
 		// animation with key 'right'
 		this.anims.create({
 			key: 'right',
-			frames: this.anims.generateFrameNumbers('player', {
-				frames: [1, 7, 1, 13]
+			frames: this.anims.generateFrameNumbers('kirito', {
+				frames: lpcReels.walk.left
 			}),
 			frameRate: 10,
 			repeat: -1
@@ -206,8 +280,8 @@ class WorldScene extends Phaser.Scene {
 
 		this.anims.create({
 			key: 'up',
-			frames: this.anims.generateFrameNumbers('player', {
-				frames: [2, 8, 2, 14]
+			frames: this.anims.generateFrameNumbers('kirito', {
+				frames: lpcReels.walk.up
 			}),
 			frameRate: 10,
 			repeat: -1
@@ -215,8 +289,8 @@ class WorldScene extends Phaser.Scene {
 
 		this.anims.create({
 			key: 'down',
-			frames: this.anims.generateFrameNumbers('player', {
-				frames: [0, 6, 0, 12]
+			frames: this.anims.generateFrameNumbers('kirito', {
+				frames: lpcReels.walk.down
 			}),
 			frameRate: 10,
 			repeat: -1
@@ -266,7 +340,7 @@ class WorldScene extends Phaser.Scene {
 	createPlayer(playerInfo) {
 
 		// our player sprite created through the physics system
-		this.player = this.add.sprite(0, 0, 'player', 6);
+		this.player = this.add.sprite(0, 0, 'kirito', 6);
 
 		this.container = this.add.container(playerInfo.x, playerInfo.y);
 		this.container.setSize(16, 16);
