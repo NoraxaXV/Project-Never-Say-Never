@@ -15,7 +15,7 @@
     "@phaserjs/plugin-loader": "0.0.3",
     "@sendgrid/helpers": "^6.5.5",
     "@sendgrid/mail": "^6.5.5",
-    "bcrypt": "^4.0.1",
+    "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.5",
     "dotenv": "^8.2.0",
